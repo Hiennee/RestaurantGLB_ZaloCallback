@@ -17,7 +17,18 @@ namespace ZaloPayCallbackAPI.Models
         }
 
         public virtual DbSet<MerchantAccountsZalopay> MerchantAccountsZalopays { get; set; } = null!;
+        public virtual DbSet<WaitPayment> WaitPayments { get; set; } = null!;
         public virtual DbSet<ZaloPayCallbackDetail> ZaloPayCallbackDetails { get; set; } = null!;
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=DESKTOP-Q5S0M34\\SQLSERVER;Database=RestaurantGLB;Trusted_Connection=True;");
+            }
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.UseCollation("Korean_Wansung_CI_AS");
@@ -57,6 +68,73 @@ namespace ZaloPayCallbackAPI.Models
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
+            });
+
+            modelBuilder.Entity<WaitPayment>(entity =>
+            {
+                entity.HasKey(e => e.TransactionUuid)
+                    .HasName("PK__WAIT_PAY__4F344C1784B71738");
+
+                entity.ToTable("WAIT_PAYMENT");
+
+                entity.Property(e => e.TransactionUuid)
+                    .HasMaxLength(200)
+                    .HasColumnName("TRANSACTION_UUID");
+
+                entity.Property(e => e.BillNo).HasColumnName("BILL_NO");
+
+                entity.Property(e => e.BillSeq).HasColumnName("BILL_SEQ");
+
+                entity.Property(e => e.CdShop)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CD_SHOP");
+
+                entity.Property(e => e.DepositAmt)
+                    .HasColumnType("decimal(18, 0)")
+                    .HasColumnName("DEPOSIT_AMT");
+
+                entity.Property(e => e.EcollectionCd)
+                    .HasMaxLength(30)
+                    .HasColumnName("ECOLLECTION_CD");
+
+                entity.Property(e => e.InsertDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("INSERT_DATE")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.ModifileDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("MODIFILE_DATE")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.MotherAccntNo)
+                    .HasMaxLength(255)
+                    .HasColumnName("MOTHER_ACCNT_NO");
+
+                entity.Property(e => e.MotherAccntOwner)
+                    .HasMaxLength(255)
+                    .HasColumnName("MOTHER_ACCNT_OWNER");
+
+                entity.Property(e => e.PosCreate).HasColumnName("POS_CREATE");
+
+                entity.Property(e => e.PosNo)
+                    .HasMaxLength(10)
+                    .HasColumnName("POS_NO");
+
+                entity.Property(e => e.QrData).HasColumnName("QR_DATA");
+
+                entity.Property(e => e.SaleDate)
+                    .HasColumnType("date")
+                    .HasColumnName("SALE_DATE");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(10)
+                    .HasColumnName("STATUS");
+
+                entity.Property(e => e.StatusOld)
+                    .HasMaxLength(10)
+                    .HasColumnName("STATUS_OLD");
             });
 
             modelBuilder.Entity<ZaloPayCallbackDetail>(entity =>

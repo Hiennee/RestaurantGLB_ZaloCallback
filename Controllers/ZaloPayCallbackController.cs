@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 using ZaloPay.Helper.Crypto;
 using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace ZaloPayCallbackAPI.Controllers
 {
@@ -62,6 +63,16 @@ namespace ZaloPayCallbackAPI.Controllers
                     data.MerchantUserId = Convert.ToString(dataJson["merchant_user_id"]) ?? "";
                     data.UserFeeAmount = Convert.ToInt64(dataJson["user_fee_amount"]);
                     data.DiscountAmount = Convert.ToInt64(dataJson["discount_amount"]);
+
+                    WaitPayment transaction = await _context.WaitPayments.FirstOrDefaultAsync(t => t.TransactionUuid == data.AppTransId);
+                    if (transaction == null)
+                    {
+                        result["return_code"] = -1;
+                        result["return_message"] = "Không tìm thấy mã hóa đơn";
+                        return Ok(result);
+                    }
+                    transaction.Status = "5";
+                    transaction.StatusOld = "5";
 
                     await _context.ZaloPayCallbackDetails.AddAsync(data);
                     await _context.SaveChangesAsync();
