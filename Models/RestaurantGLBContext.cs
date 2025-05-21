@@ -19,16 +19,6 @@ namespace ZaloPayCallbackAPI.Models
         public virtual DbSet<MerchantAccountsZalopay> MerchantAccountsZalopays { get; set; } = null!;
         public virtual DbSet<WaitPayment> WaitPayments { get; set; } = null!;
         public virtual DbSet<ZaloPayCallbackDetail> ZaloPayCallbackDetails { get; set; } = null!;
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-Q5S0M34\\SQLSERVER;Database=RestaurantGLB;Trusted_Connection=True;");
-            }
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.UseCollation("Korean_Wansung_CI_AS");
@@ -72,8 +62,7 @@ namespace ZaloPayCallbackAPI.Models
 
             modelBuilder.Entity<WaitPayment>(entity =>
             {
-                entity.HasKey(e => e.TransactionUuid)
-                    .HasName("PK__WAIT_PAY__4F344C1784B71738");
+                entity.HasKey(e => e.TransactionUuid);
 
                 entity.ToTable("WAIT_PAYMENT");
 
@@ -139,8 +128,7 @@ namespace ZaloPayCallbackAPI.Models
 
             modelBuilder.Entity<ZaloPayCallbackDetail>(entity =>
             {
-                entity.HasKey(e => e.AppTransId)
-                    .HasName("PK__ZaloPay___362C36BB9085BE39");
+                entity.HasKey(e => e.AppTransId);
 
                 entity.ToTable("ZaloPay_Callback_Detail");
 
