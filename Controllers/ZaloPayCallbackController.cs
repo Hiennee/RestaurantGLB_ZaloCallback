@@ -24,14 +24,14 @@ namespace ZaloPayCallbackAPI.Controllers
         [HttpPost("callback")]
         public async Task<IActionResult> Post([FromBody] dynamic req)
         {
-            JsonElement jsonElement = (JsonElement)req;
-            string jsonString = jsonElement.GetRawText();
-            JObject reqJson = JObject.Parse(jsonString);
-
             var result = new Dictionary<string, object>();
-            string key2 = _context.MerchantAccountsZalopays.Select(zalo => zalo.Key2).FirstOrDefault() ?? "";
             try
             {
+                JsonElement jsonElement = (JsonElement)req;
+                string jsonString = jsonElement.GetRawText();
+                JObject reqJson = JObject.Parse(jsonString);
+
+                string key2 = _context.MerchantAccountsZalopays.Select(zalo => zalo.Key2).FirstOrDefault() ?? "";
                 var dataStr = Convert.ToString(reqJson["data"]);
                 var reqMac = Convert.ToString(reqJson["mac"]);
 

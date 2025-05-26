@@ -36,10 +36,10 @@ namespace ZaloPayCallbackAPI.Models
                     .IsUnicode(false)
                     .HasColumnName("APP_ID");
 
-                entity.Property(e => e.CdShop)
+                entity.Property(e => e.StoreCode)
                     .HasMaxLength(50)
                     .IsUnicode(false)
-                    .HasColumnName("CD_SHOP");
+                    .HasColumnName("StoreCode");
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
