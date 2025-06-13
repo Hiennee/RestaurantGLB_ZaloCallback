@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "ZaloPayCallbackAPI": {
+    "RestaurantGLB_Webserver": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

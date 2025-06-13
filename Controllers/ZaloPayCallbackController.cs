@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using Newtonsoft.Json.Linq;
-using ZaloPayCallbackAPI.Models;
+using RestaurantGLB_Webserver.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 using ZaloPay.Helper.Crypto;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 
-namespace ZaloPayCallbackAPI.Controllers
+namespace RestaurantGLB_Webserver.Controllers
 {
     [ApiController]
     [Route("api/zalo")]

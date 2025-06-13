@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace ZaloPayCallbackAPI.Models
+namespace RestaurantGLB_Webserver.Models
 {
     public partial class UnionPOSContext : DbContext
     {

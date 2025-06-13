@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ZaloPayCallbackAPI.Models
+namespace RestaurantGLB_Webserver.Models
 {
     public partial class ZaloPayCallbackDetail
     {
